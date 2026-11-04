@@ -1,58 +1,136 @@
-# AWS Continuous Integration Demo
+# AWS Automated CI Pipeline for Python Flask Application
 
-## Set Up GitHub Repository
+## Project Overview
 
-The first step in our CI journey is to set up a GitHub repository to store our Python application's source code. If you already have a repository, feel free to skip this step. Otherwise, let's create a new repository on GitHub by following these steps:
+This project demonstrates the implementation of an automated Continuous Integration (CI) pipeline for a Python Flask application using AWS CodePipeline, AWS CodeBuild, GitHub, and Docker.
 
-- Go to github.com and sign in to your account.
-- Click on the "+" button in the top-right corner and select "New repository."
-- Give your repository a name and an optional description.
-- Choose the appropriate visibility option based on your needs.
-- Initialize the repository with a README file.
-- Click on the "Create repository" button to create your new GitHub repository.
+The pipeline integrates source code management with automated build execution, allowing code changes pushed to GitHub to trigger the build process automatically.
 
-Great! Now that we have our repository set up, we can move on to the next step.
+## Architecture
 
-## Create an AWS CodePipeline
-In this step, we'll create an AWS CodePipeline to automate the continuous integration process for our Python application. AWS CodePipeline will orchestrate the flow of changes from our GitHub repository to the deployment of our application. Let's go ahead and set it up:
+**Workflow:**
 
-- Go to the AWS Management Console and navigate to the AWS CodePipeline service.
-- Click on the "Create pipeline" button.
-- Provide a name for your pipeline and click on the "Next" button.
-- For the source stage, select "GitHub" as the source provider.
-- Connect your GitHub account to AWS CodePipeline and select your repository.
-- Choose the branch you want to use for your pipeline.
-- In the build stage, select "AWS CodeBuild" as the build provider.
-- Create a new CodeBuild project by clicking on the "Create project" button.
-- Configure the CodeBuild project with the necessary settings for your Python application, such as the build environment,  build commands, and artifacts.
-- Save the CodeBuild project and go back to CodePipeline.
-- Continue configuring the pipeline stages, such as deploying your application using AWS Elastic Beanstalk or any other suitable deployment option.
-- Review the pipeline configuration and click on the "Create pipeline" button to create your AWS CodePipeline.
+GitHub → AWS CodePipeline → AWS CodeBuild → Docker Image Build
 
-Awesome job! We now have our pipeline ready to roll. Let's move on to the next step to set up AWS CodeBuild.
+### AWS Services Used
 
-## Configure AWS CodeBuild
+| Service | Purpose |
+|---|---|
+| AWS CodePipeline | Automates pipeline orchestration |
+| AWS CodeBuild | Executes build commands |
+| GitHub | Source code repository |
+| AWS Systems Manager Parameter Store | Secure storage of Docker credentials |
+| Docker | Container image creation |
 
-In this step, we'll configure AWS CodeBuild to build our Python application based on the specifications we define. CodeBuild will take care of building and packaging our application for deployment. Follow these steps:
+### Development Technologies
 
-- In the AWS Management Console, navigate to the AWS CodeBuild service.
-- Click on the "Create build project" button.
-- Provide a name for your build project.
-- For the source provider, choose "AWS CodePipeline."
-- Select the pipeline you created in the previous step.
-- Configure the build environment, such as the operating system, runtime, and compute resources required for your Python application.
-- Specify the build commands, such as installing dependencies and running tests. Customize this based on your application's requirements.
-- Set up the artifacts configuration to generate the build output required for deployment.
-- Review the build project settings and click on the "Create build project" button to create your AWS CodeBuild project.
+- Python 3.11
+- Flask
+- Docker
+- Ubuntu
+- YAML
+- Git and GitHub
 
-Fantastic! With AWS CodeBuild all set up, we're now ready to witness the magic of continuous integration in action.
+## Project Implementation
 
-## Trigger the CI Process
+### 1. GitHub Repository Integration
 
-In this final step, we'll trigger the CI process by making a change to our GitHub repository. Let's see how it works:
+Connected the GitHub repository to AWS CodeBuild using the GitHub integration.
 
-- Go to your GitHub repository and make a change to your Python application's source code. It could be a bug fix, a new feature, or any other change you want to introduce.
-- Commit and push your changes to the branch configured in your AWS CodePipeline.
-- Head over to the AWS CodePipeline console and navigate to your pipeline.
-- You should see the pipeline automatically kick off as soon as it detects the changes in your repository.
-- Sit back and relax while AWS CodePipeline takes care of the rest. It will fetch the latest code, trigger the build process with AWS CodeBuild, and deploy the application if you configured the deployment stage.
+Repository:  
+https://github.com/AadityaRavindraGhumare/aws-devops-zero-to-hero
+
+### 2. AWS CodeBuild Configuration
+
+Created a CodeBuild project with:
+
+- Compute: EC2
+- Provisioning: On-demand
+- Environment image: AWS Managed Image
+- Operating System: Ubuntu
+- Runtime: Standard
+- Build environment: Docker container
+- Python runtime: 3.11
+
+### 3. Buildspec Configuration
+
+Configured build commands using YAML to automate:
+
+- Python dependency installation.
+- Docker authentication using securely stored credentials.
+- Navigation to the application directory.
+- Docker image creation.
+
+### 4. AWS CodePipeline Configuration
+
+Created a pipeline with two stages:
+
+**Source Stage**
+- GitHub integration through GitHub App.
+- Source code retrieval.
+- Automatic triggering through repository changes.
+
+**Build Stage**
+- AWS CodeBuild integration.
+- Execution of buildspec commands.
+- Docker image build process.
+- Build status monitoring.
+
+## Execution Results
+
+The pipeline was successfully executed.
+
+- GitHub source stage: Succeeded.
+- AWS CodeBuild stage: Succeeded.
+- Latest pipeline execution: Succeeded.
+- Build environment: Ubuntu.
+- Application: Python Flask.
+
+## Key Learning Outcomes
+
+- AWS CI pipeline implementation.
+- GitHub and AWS integration.
+- AWS CodeBuild configuration.
+- AWS CodePipeline orchestration.
+- Docker image creation.
+- Buildspec YAML configuration.
+- Secure credential management.
+- Automated build execution and monitoring.
+
+## Screenshots
+
+Add your implementation screenshots to a folder named `screenshots/`.
+
+Suggested screenshots:
+
+1. AWS CodeBuild project configuration.
+2. GitHub repository integration.
+3. Buildspec configuration.
+4. AWS CodeBuild successful execution.
+5. AWS CodePipeline architecture.
+6. Successful pipeline execution.
+
+## Future Enhancements
+
+- Add automated testing.
+- Push Docker images to Amazon ECR.
+- Implement AWS CodeDeploy.
+- Deploy the application on Amazon EC2 or ECS.
+- Add security scanning to the pipeline.
+- Implement a complete CI/CD workflow.
+
+## Author
+
+**Aaditya Ghumare**
+
+B.Tech Computer Engineering Student
+
+Interested in AWS Cloud, DevOps, Docker, CI/CD, and Cloud Infrastructure.
+
+GitHub: https://github.com/AadityaRavindraGhumare
+
+---
+
+⭐ If you find this project useful, feel free to explore the repository and share feedback.
+
+#AWS #DevOps #CloudComputing #CI #Docker #Python
